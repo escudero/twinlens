@@ -24,7 +24,7 @@ The Blender studio scene, from four angles:
 
 ![Studio stills from four angles](docs/media/mickey_stills.jpg)
 
-The figurine is the author's own, photographed on a desk: 20 photos at 1.75× digital zoom, all at about the same height.
+The figurine is the author's own, photographed in a small light box with a green backdrop ([the setup](#taking-the-photos)): 20 photos at 1.75× digital zoom, all at about the same height.
 
 ## How it works
 
@@ -122,6 +122,8 @@ Options: `--gpu none` (photos only, no Kaggle), `--seeds 1,2,3,4` (generated can
 The figurine's photos are not in the repository. With your own photos of it, its profile runs as `--pedestal --profile examples/mickey/profile.py`.
 
 ### Taking the photos
+
+<p align="center"><img src="docs/media/setup.jpg" width="560" alt="The setup: a small LED light box with a green backdrop, the figurine inside, a phone on a stand and the photos on a laptop"><br><em>The setup used for the figurine: a small LED light box with a green backdrop, the phone on a stand, the photos checked on the laptop.</em></p>
 
 - **Cloth:** a green cloth under and behind the object, filling the photo out to its edges, because each photo's border is where the cloth's colour is measured. Green details on the object are fine as long as they are not the cloth's shade. Soft, even light.
 - **Photos:** 15–40, walking all the way around at about the same height, a bit above the object (10–20°). Keep 10–20° between shots, so neighbouring photos overlap.

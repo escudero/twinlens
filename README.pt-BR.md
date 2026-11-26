@@ -24,7 +24,7 @@ A cena de estúdio no Blender, de quatro ângulos:
 
 ![Imagens de estúdio de quatro ângulos](docs/media/mickey_stills.jpg)
 
-A estatueta é do autor, fotografada numa mesa: 20 fotos com zoom digital de 1,75×, todas mais ou menos na mesma altura.
+A estatueta é do autor, fotografada numa pequena caixa de luz com fundo verde ([o setup](#como-tirar-as-fotos)): 20 fotos com zoom digital de 1,75×, todas mais ou menos na mesma altura.
 
 ## Como funciona
 
@@ -122,6 +122,8 @@ Opções: `--gpu none` (só as fotos, sem Kaggle), `--seeds 1,2,3,4` (candidatos
 As fotos da estatueta não estão no repositório. Com fotos suas dela, o perfil roda com `--pedestal --profile examples/mickey/profile.py`.
 
 ### Como tirar as fotos
+
+<p align="center"><img src="docs/media/setup.jpg" width="560" alt="O setup: uma pequena caixa de luz LED com fundo verde, a estatueta dentro, o celular num suporte e as fotos no notebook"><br><em>O setup usado na estatueta: uma pequena caixa de luz LED com fundo verde, o celular num suporte e as fotos conferidas no notebook.</em></p>
 
 - **Pano:** um pano verde embaixo e atrás do objeto, ocupando a foto até as bordas, porque é na borda de cada foto que a cor do pano é medida. Detalhes verdes no objeto não atrapalham, desde que não tenham o mesmo tom do pano. Luz suave e uniforme.
 - **Fotos:** de 15 a 40, dando a volta inteira mais ou menos na mesma altura, um pouco acima do objeto (10–20°). Mantenha 10–20° entre as fotos, para que fotos vizinhas se sobreponham.
