@@ -18,7 +18,7 @@
 
 Fotos (fundo verde) ao lado de renders do modelo pelas mesmas câmeras (fundo branco):
 
-![Fotos ao lado de renders pelas mesmas câmeras](docs/media/mickey_compare.jpg)
+<p align="center"><img src="docs/media/mickey_compare.jpg" width="640" alt="Fotos ao lado de renders pelas mesmas câmeras"></p>
 
 A cena de estúdio no Blender, de quatro ângulos:
 

@@ -18,7 +18,7 @@
 
 Photos (green) next to renders of the model through the same cameras (white):
 
-![Photos next to renders through the same cameras](docs/media/mickey_compare.jpg)
+<p align="center"><img src="docs/media/mickey_compare.jpg" width="640" alt="Photos next to renders through the same cameras"></p>
 
 The Blender studio scene, from four angles:
 
