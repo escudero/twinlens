@@ -78,6 +78,27 @@ def clean_colours(mesh, ctx): ...     # step 6: colour rules after painting
 |---|---|
 | <img src="docs/media/mickey_no_profile.jpg" width="440" alt="Model without a profile: the tag and hook are a tangle, red stains on the figure"> | <img src="docs/media/mickey_profile.jpg" width="440" alt="Model with the profile: ring, glass tag and hook drawn as clean shapes"> |
 
+### Writing a profile with an AI agent
+
+You can write a profile by hand, but it is not simple: the rules take NumPy, a little geometry and several rounds of tuning thresholds while looking at the images. A coding agent that reads images and runs commands, such as [Claude Code](https://claude.com/claude-code), can do that tuning for you. Run the object without a profile, then, inside the project, use a prompt like this:
+
+```text
+I want a twinlens profile for the object `[OBJECT NAME]`. Find its work
+folder and photos in the project; if there is more than one, ask me.
+
+Use the "Profiles" section of the README and the example
+examples/mickey/profile.py as reference. Everything goes in the profile: do
+not change anything in twinlens/.
+
+1. Compare the model with the photos (out/compare.jpg and out/stills/) and
+   list what came out wrong. Do not write code yet: I confirm what to fix.
+2. Write the profile and run `twinlens align` with --profile. Check the
+   images and adjust until it is fixed, without breaking what was right.
+3. At the end, show me the before and after.
+```
+
+The confirmation in step 1 matters: only you know what is right on the object. A glossy horn can look green in the photos themselves, reflecting the cloth, and a black streak can be a defect or part of the paint. Review the profile before trusting it: a rule that is too broad repaints parts that were right.
+
 ## What went wrong
 
 | Finding | Evidence | What changed |

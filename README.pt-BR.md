@@ -78,6 +78,27 @@ def clean_colours(mesh, ctx): ...     # passo 6: regras de cor depois da pintura
 |---|---|
 | <img src="docs/media/mickey_no_profile.jpg" width="440" alt="Modelo sem perfil: plaquinha e gancho embolados, manchas vermelhas na figura"> | <img src="docs/media/mickey_profile.jpg" width="440" alt="Modelo com perfil: aro, plaquinha de vidro e gancho desenhados limpos"> |
 
+### Criar um perfil com ajuda de IA
+
+Dá para escrever um perfil à mão, mas não é simples: as regras exigem NumPy, um pouco de geometria e várias rodadas de ajuste de limiares olhando as imagens. Um agente de código que lê imagens e roda comandos, como o [Claude Code](https://claude.com/claude-code), pode fazer esses ajustes por você. Rode o objeto sem perfil e, dentro do projeto, use um prompt como este:
+
+```text
+Quero um perfil do twinlens para o objeto `[NOME DO OBJETO]`. Encontre a
+pasta de trabalho e as fotos dele no projeto; se houver mais de uma, me
+pergunte.
+
+Use como referência a seção "Perfis" do README e o exemplo
+examples/mickey/profile.py. Tudo fica no perfil: não altere nada em twinlens/.
+
+1. Compare o modelo com as fotos (out/compare.jpg e out/stills/) e me liste
+   o que saiu errado. Não escreva código ainda: eu confirmo o que corrigir.
+2. Escreva o perfil e rode `twinlens align` com --profile. Confira as imagens
+   e ajuste até resolver, sem estragar o que estava certo.
+3. No fim, mostre o antes e o depois.
+```
+
+A confirmação do passo 1 importa: só você sabe o que é certo no objeto. Um chifre brilhante pode aparecer verde nas próprias fotos, por reflexo do pano, e um risco preto pode ser defeito ou desenho. Revise o perfil antes de confiar nele, porque uma regra larga demais repinta partes que estavam certas.
+
 ## O que deu errado
 
 | O que aconteceu | Evidência | O que mudou |
