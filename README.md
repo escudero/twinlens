@@ -127,7 +127,7 @@ python3.12 -m venv .venv && .venv/bin/pip install -e .
 .venv/bin/twinlens run ~/photos/my-object --work work/my-object
 ```
 
-`run` stops once after the green key: check `work/my-object/out/masks_preview.jpg` (the yellow outline should hug the object) and answer `y` to go on. `--yes` skips the question.
+`run` stops once after the chroma key: check `work/my-object/out/masks_preview.jpg` (the yellow outline should hug the object) and answer `y` to go on. `--yes` skips the question.
 
 Results land in `work/my-object/out/`:
 
@@ -138,7 +138,7 @@ Results land in `work/my-object/out/`:
 | `turntable.mp4`, `stills/` | 8 s turntable (1080 × 1350) and four angles |
 | `compare.jpg` | your photos next to renders through the same cameras |
 | `model_carved.ply` | the model built from the photos alone (no GPU step) |
-| `masks_preview.jpg`, `check_*.jpg` | the green key (cut-away parts dimmed, warnings in red) and the silhouette fit, for checking |
+| `masks_preview.jpg`, `check_*.jpg` | the chroma key mask (cut-away parts dimmed, warnings in red) and the silhouette fit, for checking |
 
 Each step saves its results in the work folder, and `run` skips finished steps, so it resumes after an interruption. Steps can also run one at a time: `twinlens carve PHOTOS --work WORK`.
 
