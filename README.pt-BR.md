@@ -118,7 +118,7 @@ A confirmação do passo 1 importa: só você sabe o que é certo no objeto. Um 
 
 ## Reproduzir
 
-**Requisitos:** Linux, Python 3.10–3.12, [Blender](https://www.blender.org/) 4.2+ no `PATH` (testado com a 5.3), FFmpeg e, para o passo 5, uma conta grátis no [Kaggle](https://www.kaggle.com/) com o token da API em `~/.kaggle` (kaggle.com › Settings › API).
+**Requisitos:** Linux, Python 3.10–3.12, [Blender](https://www.blender.org/) 4.2+ no `PATH` (testado com a 5.3), FFmpeg, 16 GB de RAM (o passo align chega a uns 6 GB) e, para o passo 5, uma conta grátis no [Kaggle](https://www.kaggle.com/) com o token da API em `~/.kaggle` (kaggle.com › Settings › API).
 
 ```bash
 git clone https://github.com/escudero/twinlens && cd twinlens
@@ -144,7 +144,16 @@ Cada passo salva seus resultados na pasta de trabalho, e o `run` pula os passos 
 
 Opções: `--gpu none` (só as fotos, sem Kaggle), `--seeds 1,2,3,4` (candidatos gerados), `--pedestal` (o objeto fica numa base redonda, que é redesenhada exata), `--height-cm 12` (escala real), `--profile arquivo.py` (regras do objeto), `--no-video`, `--yes`.
 
-As fotos da estatueta não estão no repositório. Com fotos suas dela, o perfil roda com `--pedestal --profile examples/mickey/profile.py`.
+### Testar com as fotos incluídas
+
+As fotos dos dois objetos estão em `examples/`, reduzidas para 2040 px (o tamanho em que o passo 1 já trabalha), sem GPS e sem nenhuma outra informação do EXIF além da distância focal e do zoom digital:
+
+```bash
+.venv/bin/twinlens run examples/mickey/photos --work work/mickey --pedestal --profile examples/mickey/profile.py
+.venv/bin/twinlens run examples/bumba-meu-boi/photos --work work/bumba-meu-boi
+```
+
+Espere resultados próximos das imagens daqui, não idênticos. O passo 5 gera formas novas a partir dessas fotos. No segundo objeto, as fotos reduzidas deram o mesmo melhor ajuste de silhueta que as originais (IoU 0,862 contra 0,861), com os detalhes pintados um pouco mais suaves.
 
 ### Como tirar as fotos
 
@@ -161,9 +170,10 @@ As fotos da estatueta não estão no repositório. Com fotos suas dela, o perfil
 twinlens/           o pipeline, um módulo por passo (python -m twinlens)
   kaggle_kernel.py  o script que roda o Hunyuan3D-2mv no Kaggle
   geometry.py       projeção, rasterização e IoU de silhueta usados pelos passos
-examples/mickey/    o perfil da estatueta
+examples/mickey/    o perfil e as fotos da estatueta
+examples/bumba-meu-boi/  as fotos do segundo objeto
 docs/media/         as imagens deste README
-work/               fotos e tudo o que o pipeline gera, ignorado pelo git
+work/               tudo o que o pipeline gera, ignorado pelo git
 ```
 
 ## Limitações
@@ -177,7 +187,7 @@ work/               fotos e tudo o que o pipeline gera, ignorado pelo git
 ## Créditos e licenças
 
 - **Código:** © 2026 Claudio Escudero, [MIT](LICENSE).
-- **Fotos e imagens** em `docs/media/`: do autor. A estatueta é um produto Disney (Mickey Mouse é marca da Disney); este estudo não tem ligação nem aval da Disney.
+- **Fotos e imagens** em `docs/media/` e `examples/`: do autor. A estatueta é um produto Disney (Mickey Mouse é marca da Disney); este estudo não tem ligação nem aval da Disney.
 - [Hunyuan3D-2mv](https://github.com/Tencent-Hunyuan/Hunyuan3D-2) (Tencent), Tencent Hunyuan Community License, que tem limites de território. Ele é baixado e roda na sua própria conta do Kaggle, não vem junto aqui.
 - [MoGe-2](https://github.com/microsoft/MoGe) (Microsoft), pesos `Ruicheng/moge-2-vitl-normal`.
 - [ALIKED e LightGlue](https://github.com/cvg/LightGlue) (cvg, ETH Zurich), [COLMAP](https://colmap.github.io/) / pycolmap.

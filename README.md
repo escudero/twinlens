@@ -118,7 +118,7 @@ The confirmation in step 1 matters: only you know what is right on the object. A
 
 ## How to reproduce
 
-**Requirements:** Linux, Python 3.10–3.12, [Blender](https://www.blender.org/) 4.2+ on `PATH` (tested with 5.3), FFmpeg, and for step 5 a free [Kaggle](https://www.kaggle.com/) account with its API token in `~/.kaggle` (kaggle.com › Settings › API).
+**Requirements:** Linux, Python 3.10–3.12, [Blender](https://www.blender.org/) 4.2+ on `PATH` (tested with 5.3), FFmpeg, 16 GB of RAM (the align step peaks at about 6 GB), and for step 5 a free [Kaggle](https://www.kaggle.com/) account with its API token in `~/.kaggle` (kaggle.com › Settings › API).
 
 ```bash
 git clone https://github.com/escudero/twinlens && cd twinlens
@@ -144,7 +144,16 @@ Each step saves its results in the work folder, and `run` skips finished steps, 
 
 Options: `--gpu none` (photos only, no Kaggle), `--seeds 1,2,3,4` (generated candidates), `--pedestal` (the object stands on a round base, which is redrawn exactly), `--height-cm 12` (real scale), `--profile file.py` (object-specific rules), `--no-video`, `--yes`.
 
-The figurine's photos are not in the repository. With your own photos of it, its profile runs as `--pedestal --profile examples/mickey/profile.py`.
+### Trying the included photos
+
+The photos of both objects are in `examples/`, downsized to 2040 px (the size step 1 works at anyway), with GPS and every other EXIF tag removed except the focal length and the digital zoom:
+
+```bash
+.venv/bin/twinlens run examples/mickey/photos --work work/mickey --pedestal --profile examples/mickey/profile.py
+.venv/bin/twinlens run examples/bumba-meu-boi/photos --work work/bumba-meu-boi
+```
+
+Expect results close to the images here, not identical. Step 5 generates new shapes from these photos. On the second object, the downsized photos gave the same best silhouette fit as the full-resolution ones (IoU 0.862 against 0.861), with the painted detail a little softer.
 
 ### Taking the photos
 
@@ -161,9 +170,10 @@ The figurine's photos are not in the repository. With your own photos of it, its
 twinlens/           the pipeline, one module per step (python -m twinlens)
   kaggle_kernel.py  the script that runs Hunyuan3D-2mv on Kaggle
   geometry.py       projection, rasterising and silhouette IoU shared by the steps
-examples/mickey/    the figurine's profile
+examples/mickey/    the figurine's profile and photos
+examples/bumba-meu-boi/  the second object's photos
 docs/media/         the images in this README
-work/               photos and everything the pipeline writes, ignored by git
+work/               everything the pipeline writes, ignored by git
 ```
 
 ## Limitations
@@ -177,7 +187,7 @@ work/               photos and everything the pipeline writes, ignored by git
 ## Credits and licenses
 
 - **Code:** © 2026 Claudio Escudero, [MIT](LICENSE).
-- **Photos and images** in `docs/media/`: the author's own. The figurine is a Disney product (Mickey Mouse is a trademark of Disney); this study is not affiliated with or endorsed by Disney.
+- **Photos and images** in `docs/media/` and `examples/`: the author's own. The figurine is a Disney product (Mickey Mouse is a trademark of Disney); this study is not affiliated with or endorsed by Disney.
 - [Hunyuan3D-2mv](https://github.com/Tencent-Hunyuan/Hunyuan3D-2) (Tencent), Tencent Hunyuan Community License, which has territory limits. It is downloaded and run in your own Kaggle account, not shipped here.
 - [MoGe-2](https://github.com/microsoft/MoGe) (Microsoft), weights `Ruicheng/moge-2-vitl-normal`.
 - [ALIKED and LightGlue](https://github.com/cvg/LightGlue) (cvg, ETH Zurich), [COLMAP](https://colmap.github.io/) / pycolmap.
