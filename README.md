@@ -1,8 +1,8 @@
-# twinlens: a phone, a green cloth and a painted 3D model
+# twinlens: a phone, a chroma key backdrop and a painted 3D model
 
 🌐 **English** · [Português (Brasil)](README.pt-BR.md)
 
-**Photos of a small object on a green cloth, turned into a painted 3D model and a Blender studio scene by open AI models.**
+**Photos of a small object on a green chroma key backdrop, turned into a painted 3D model and a Blender studio scene by open AI models.**
 
 > A personal study by **Claudio Escudero** ([claudioescudero.com](https://claudioescudero.com) · [linkedin.com/in/claudioescudero](https://www.linkedin.com/in/claudioescudero/)). It is not a product. The code is shared so others can read it, reproduce the results and try it on their own objects.
 
@@ -10,7 +10,7 @@
   <img src="docs/media/mickey_turntable.gif" width="320" alt="Turntable of the painted 3D model of a figurine, rendered in Blender">
 </p>
 
-**The question:** can 20 phone photos, a green cloth and open models give a painted 3D model of a small object, good enough for a studio render, on a laptop and with no scanner?
+**The question:** can 20 phone photos, a chroma key backdrop and open models give a painted 3D model of a small object, good enough for a studio render, on a laptop and with no scanner?
 
 **Short answer:** for shape and colour, yes. On a 20-photo figurine, every photo was placed, the model's silhouette matches the photos at IoU 0.89, and renders through the photos' own cameras score SSIM 0.67 on the object. Fine print, glass and thin wire did not come out from the photos: they needed a profile, a small file of rules for that one object ([Profiles](#profiles-rules-for-one-object)). A second object, run with no profile, kept its shape but picked up stains on its glossy parts ([What went wrong](#what-went-wrong)).
 
@@ -34,7 +34,7 @@ The figurine is the author's own, photographed in a small light box with a green
 
 ```mermaid
 flowchart LR
-    P["15–40 photos<br/>on a green cloth"] --> K["1 prepare<br/>key the cloth"]
+    P["15–40 photos<br/>on chroma key"] --> K["1 prepare<br/>key out the backdrop"]
     K --> C["2 cameras<br/>ALIKED + LightGlue<br/>+ COLMAP"]
     C --> D["3 depth<br/>MoGe-2"]
     D --> V["4 carve<br/>voxels from<br/>silhouettes + depth"]
@@ -47,7 +47,7 @@ flowchart LR
 
 | Step | Code | What it does |
 |---|---|---|
-| 1 | [`prepare.py`](twinlens/prepare.py) | Uprights the photos (EXIF) and keys the cloth, measured on each photo's border. A pixel is cloth when it is about as green as the cloth ("excess green" `G − max(R, B)`, at least 40% of the cloth's) **and** has the cloth's own shade (chromaticity, within 6 times the cloth's spread). Then `run` stops for a look at the masks. |
+| 1 | [`prepare.py`](twinlens/prepare.py) | Uprights the photos (EXIF) and keys out the chroma key backdrop, measured on each photo's border. A pixel is backdrop when it is about as green as the backdrop ("excess green" `G − max(R, B)`, at least 40% of the backdrop's) **and** has the backdrop's own shade (chromaticity, within 6 times the backdrop's spread). Then `run` stops for a look at the masks. |
 | 2 | [`cameras.py`](twinlens/cameras.py) | Finds where each photo was taken from. ALIKED keypoints on the object only, LightGlue matches between neighbours, COLMAP's mapper. The focal length comes from EXIF (35 mm equivalent × digital zoom). |
 | 3 | [`depth.py`](twinlens/depth.py) | MoGe-2 depth for each photo, on the CPU. |
 | 4 | [`carve.py`](twinlens/carve.py) | Voxel carving from the silhouettes, then from depth (a voxel a photo saw through is air). This alone gives a complete painted model. It also finds which way is up: the photos circle the object, so their plane gives the vertical, and the table is found from each photo's lowest silhouette pixel. |
@@ -97,7 +97,7 @@ not change anything in twinlens/.
 3. At the end, show me the before and after.
 ```
 
-The confirmation in step 1 matters: only you know what is right on the object. A glossy horn can look green in the photos themselves, reflecting the cloth, and a black streak can be a defect or part of the paint. Review the profile before trusting it: a rule that is too broad repaints parts that were right.
+The confirmation in step 1 matters: only you know what is right on the object. A glossy horn can look green in the photos themselves, reflecting the backdrop, and a black streak can be a defect or part of the paint. Review the profile before trusting it: a rule that is too broad repaints parts that were right.
 
 ## What went wrong
 
@@ -106,12 +106,12 @@ The confirmation in step 1 matters: only you know what is right on the object. A
 | Classic SIFT could not place the photos | 8 of 20 photos of smooth plastic placed | Learned features on the object crop (ALIKED + LightGlue): 20 of 20 |
 | Phones record the optical focal length even with digital zoom | The photos were at 1.75×, and the first camera solve was off | The focal length is multiplied by the zoom read from EXIF |
 | Silhouettes cannot see concavities | With all photos at one height, carving left tents between parts, and the ears came out boxy | Depth carving helps; a generated shape aligned to the photos fixes it |
-| "Green" is not enough to find the cloth | Excess green alone keyed out green paint and the edges of dark glossy parts that mirror the cloth. The cloth's shade alone keyed out dark hollows lit only by green light | A pixel must pass both tests, with the cloth measured on each photo's border |
-| Glossy surfaces mirror the cloth | Black plastic turned teal and white turned mint. Over-subtracting green turned whites magenta, and per-channel medians invented blue | Never despill past grey; medoid colours instead of medians |
+| "Green" is not enough to find the backdrop | Excess green alone keyed out green paint and the edges of dark glossy parts that mirror the backdrop. The backdrop's shade alone keyed out dark hollows lit only by green light | A pixel must pass both tests, with the backdrop measured on each photo's border |
+| Glossy surfaces mirror the backdrop | Black plastic turned teal and white turned mint. Over-subtracting green turned whites magenta, and per-channel medians invented blue | Never despill past grey; medoid colours instead of medians |
 | Generated relief is a little off the real one | Its shading doubled the painted eyes and letters | Fine relief is smoothed off before painting |
 | Fine print, glass and thin wire | The tag and hook came out as a tangle ([Core only](#profiles-rules-for-one-object)) | Drawn as vectors by the profile |
 | Blender | AgX washed light colours to white; coplanar faces z-fought; Blender 5 dropped FFmpeg output | Standard view transform; the video is made from frames with ffmpeg |
-| A second object with no profile (a clay *bumba-meu-boi*, 25 photos) | The shape is right, but the glossy brown horns picked up green from the cloth, and the body has black streaks (below) | Not fixed. A profile could repaint them, as the figurine's does |
+| A second object with no profile (a clay *bumba-meu-boi*, 25 photos) | The shape is right, but the glossy brown horns picked up green from the backdrop, and the body has black streaks (below) | Not fixed. A profile could repaint them, as the figurine's does |
 | `compare.jpg` for the second object | The renders show the object tiny and far away, so it has no SSIM | Not fixed |
 
 ![The second object, no profile: right shape, green on the horns and black streaks](docs/media/bumba_stills.jpg)
@@ -159,7 +159,7 @@ Expect results close to the images here, not identical. Step 5 generates new sha
 
 <p align="center"><img src="docs/media/setup.jpg" width="560" alt="The setup: a small LED light box with a green backdrop, the figurine inside, a phone on a stand and the photos on a laptop"><br><em>The setup used for the figurine: a small LED light box with a green backdrop, the phone on a stand, the photos checked on the laptop.</em></p>
 
-- **Cloth:** a green cloth under and behind the object, filling the photo out to its edges, because each photo's border is where the cloth's colour is measured. Green details on the object are fine as long as they are not the cloth's shade. Soft, even light.
+- **Chroma key:** a green chroma key backdrop under and behind the object, filling the photo out to its edges, because each photo's border is where the backdrop's colour is measured. Green details on the object are fine as long as they are not the backdrop's shade. Soft, even light.
 - **Photos:** 15–40, walking all the way around at about the same height, a bit above the object (10–20°). Keep 10–20° between shots, so neighbouring photos overlap.
 - **Framing:** keep the whole object in every photo. Lock focus and exposure if your phone allows it, and **turn digital zoom off**. Zoom is read from EXIF and corrected, but it costs resolution.
 - **Top surfaces:** a second ring of photos from about 35° above helps them, and the gaps between parts.

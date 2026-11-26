@@ -1,7 +1,7 @@
 [project]
 name = "twinlens"
 version = "0.1.0"
-description = "Study: a phone, a green cloth and open AI models turn a small object into a painted 3D model in Blender"
+description = "Study: a phone, a chroma key backdrop and open AI models turn a small object into a painted 3D model in Blender"
 readme = "README.md"
 requires-python = ">=3.10,<3.13"
 license = { text = "CC-BY-NC-4.0" }
