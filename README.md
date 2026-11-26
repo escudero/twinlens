@@ -24,6 +24,10 @@ The Blender studio scene, from four angles:
 
 ![Studio stills from four angles](docs/media/mickey_stills.jpg)
 
+The model open in Blender: one mesh of 727k vertices, coloured by the photos, inside the studio scene (`model.blend`):
+
+<p align="center"><img src="docs/media/mickey_blender.jpg" width="720" alt="The painted model selected in Blender's viewport, with the mesh statistics and the scene outliner"></p>
+
 The figurine is the author's own, photographed in a small light box with a green backdrop ([the setup](#taking-the-photos)): 20 photos at 1.75× digital zoom, all at about the same height.
 
 ## How it works
@@ -93,11 +97,11 @@ def clean_colours(mesh, ctx): ...     # step 6: colour rules after painting
 
 ## How to reproduce
 
-**Requirements:** Linux, Python 3.10–3.12, [uv](https://docs.astral.sh/uv/), [Blender](https://www.blender.org/) 4.2+ on `PATH` (tested with 5.3), FFmpeg, and for step 5 a free [Kaggle](https://www.kaggle.com/) account with its API token in `~/.kaggle` (kaggle.com › Settings › API).
+**Requirements:** Linux, Python 3.10–3.12, [Blender](https://www.blender.org/) 4.2+ on `PATH` (tested with 5.3), FFmpeg, and for step 5 a free [Kaggle](https://www.kaggle.com/) account with its API token in `~/.kaggle` (kaggle.com › Settings › API).
 
 ```bash
 git clone https://github.com/escudero/twinlens && cd twinlens
-uv venv --python 3.12 .venv && uv pip install --python .venv -e .
+python3.12 -m venv .venv && .venv/bin/pip install -e .
 
 .venv/bin/twinlens run ~/photos/my-object --work work/my-object
 ```
