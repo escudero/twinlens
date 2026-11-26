@@ -1,6 +1,18 @@
+# environment
 .venv/
 __pycache__/
+*.pyc
 *.egg-info/
+
+# photos and everything the pipeline writes (several GB); the showcase media lives in docs/media/
 work/
 *.log
+
+# Blender backups and generated videos are never committed
 *.blend1
+*.mp4
+
+# editors / OS
+.vscode/
+.idea/
+.DS_Store
