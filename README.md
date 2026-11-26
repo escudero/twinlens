@@ -186,7 +186,7 @@ work/               everything the pipeline writes, ignored by git
 
 ## Credits and licenses
 
-- **Code:** © 2026 Claudio Escudero, [MIT](LICENSE).
+- **Code:** © 2026 Claudio Escudero, [CC BY-NC 4.0](LICENSE), non-commercial use only.
 - **Photos and images** in `docs/media/` and `examples/`: the author's own. The figurine is a Disney product (Mickey Mouse is a trademark of Disney); this study is not affiliated with or endorsed by Disney.
 - [Hunyuan3D-2mv](https://github.com/Tencent-Hunyuan/Hunyuan3D-2) (Tencent), Tencent Hunyuan Community License, which has territory limits. It is downloaded and run in your own Kaggle account, not shipped here.
 - [MoGe-2](https://github.com/microsoft/MoGe) (Microsoft), weights `Ruicheng/moge-2-vitl-normal`.
